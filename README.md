@@ -85,8 +85,8 @@ Generated files are written to `outputs/` (gitignored). Copy them to their desti
 ### Still needed (manual)
 
 ```bash
-# In each project directory — builds the knowledge graph for that project
-graphify .
+# Run Claude skill for each project - builds the knowledge graph
+/graphify .
 
 # Kaimon (Julia 1.12+ required)
 git clone https://github.com/kahliburke/Kaimon.jl ~/Kaimon.jl
