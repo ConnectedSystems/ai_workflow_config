@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ask-nim*)",
+      "Bash(ask-nim.ps1*)",
+      "Bash(nim-write*)",
+      "Bash(nim-write.ps1*)",
+      "Bash(extract-chat*)",
+      "Bash(extract-chat.ps1*)",
+      "Bash(graphify*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git status*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "mcp__kaimon__.*",
+        "hooks": []
+      }
+    ]
+  },
+  "env": {
+    "PATH_PREPEND": "${BIN_DIR}"
+  }
+}

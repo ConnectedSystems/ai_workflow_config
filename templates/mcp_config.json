@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "kaimon": {
+      "command": "julia",
+      "args": ["--project=~/Kaimon.jl", "-e", "using Kaimon; Kaimon.serve()"],
+      "env": {}
+    },
+    "graphify": {
+      "command": "graphify",
+      "args": [".", "--mcp"],
+      "env": {}
+    }
+  }
+}

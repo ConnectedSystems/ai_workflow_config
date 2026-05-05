@@ -1,0 +1,49 @@
+# Build artifacts and generated files
+graphify-out/cost.json
+graphify-out/manifest.json
+*.pyc
+__pycache__/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+coworker-venv/
+.venv/
+venv/
+env/
+
+# Package managers
+node_modules/
+.npm/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+/tmp/
+
+# Julia artifacts
+*.ji
+deps/deps.jl
+Manifest.toml
+
+# Large data / model files (add project-specific patterns below)
+*.pkl
+*.parquet
+*.arrow
+*.h5
+*.hdf5
+
+# Secrets (never read by Claude)
+.env
+.env.local
+*.key
+*.pem
+secrets/

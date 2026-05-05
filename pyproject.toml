@@ -1,0 +1,9 @@
+[project]
+name = "ai-workflow-config"
+version = "0.1.0"
+requires-python = ">=3.11"
+# install.py uses stdlib only — no dependencies needed here
+
+[tool.uv]
+# uv run install.py will use this project's Python without creating an extra venv
+managed = false

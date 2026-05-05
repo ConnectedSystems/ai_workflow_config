@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+VENV="${COWORKER_DIR:-$HOME/claude-coworker-model}/.venv/bin/python"
+TOOL="${COWORKER_DIR:-$HOME/claude-coworker-model}/tools/extract-chat"
+exec "$VENV" "$TOOL" "$@"
