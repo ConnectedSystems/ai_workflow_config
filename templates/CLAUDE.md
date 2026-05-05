@@ -30,7 +30,7 @@ ask-nim --paths /tmp/chat.txt docs/current.md --question "What doc edits are nee
 ```powershell
 ask-nim.ps1  -Paths file1,file2  -Question "What does X do?"
 nim-write.ps1 -Spec "..." -Context ref -Target out
-extract-chat.ps1 -Session "$$env:APPDATA\claude\projects\<proj>\session.jsonl" -Out "$$env:TEMP\chat.txt"
+extract-chat.ps1 -Session "$env:APPDATA\claude\projects\<proj>\session.jsonl" -Out "$env:TEMP\chat.txt"
 ```
 
 **Corpus ordering:** always put file paths before the question — enables prefix caching on repeated calls.
@@ -73,14 +73,49 @@ Before using any Kaimon tool, confirm the MCP server is active. If unavailable, 
 
 If Kaimon drops: restart `./bin/kaimon`, press `g` to reconnect Gate.
 
-$JULIA_SECTION
+## Julia Guidelines
+
+- Package ops: use `pkg_add` / `pkg_rm` via Kaimon — not bare `julia -e 'Pkg.add(...)'`
+- Generated code must include explicit type annotations on function signatures
+- Test generation via `nim-write`: request `@testset` / `@test` and pass an existing test file as `--context`
+- Prefer `using` over `import` unless selective imports are needed for disambiguation
+- Numeric/scientific code: pass an existing `.jl` file as `nim-write --context` to match type annotation conventions
+
+
 ---
 
 ## Shell Detection
 
-- Windows (`$$IsWindows` true): use `.ps1` scripts, `$$env:VAR`, backtick continuation
-- Linux/macOS: use bash scripts, `$$VAR`, backslash continuation
-- Never hardcode `/home/` or `C:\Users\` — use `~` / `$$HOME` / `$$env:USERPROFILE`
+- Windows (`$IsWindows` true): use `.ps1` scripts, `$env:VAR`, backtick continuation
+- Linux/macOS: use bash scripts, `$VAR`, backslash continuation
+- Never hardcode `/home/` or `C:\Users\` — use `~` / `$HOME` / `$env:USERPROFILE`
+
+---
+
+## Worker Delegation Rules
+
+When asked to analyze, summarize, or search across multiple files:
+DELEGATE to ask-nim with relevant file paths.
+
+When asked to generate boilerplate, tests, or documentation:
+DELEGATE to nim-write with appropriate reference files.
+
+When asked to review session history:
+DELEGATE to extract-chat.
+
+## REQUIRED: Pre-Read Checklist (consult before every Read/Grep call)
+
+Before using the Read or Grep tool, answer:
+1. Is the file >400 lines? → use `ask-nim`
+2. Am I opening 3+ files? → use `ask-nim`
+3. Am I searching for specific text over 3+ files? → use `ask-nim`
+4. Is this a structural/overview question? → check `graphify-out/GRAPH_REPORT.md` if it
+   exists or ask to run `/graphify` if it does not.
+5. Am I generating boilerplate? → use `nim-write`
+
+**NEVER read files directly when any of the above is true.**
+Only bypass this gate for: logic bugs, architectural decisions, Julia type inference, tasks
+needing exact line numbers.
 
 ---
 
@@ -94,4 +129,4 @@ $JULIA_SECTION
 | Swap worker model | Change `WORKER_MODEL` env var only |
 | New Julia domain tools | Add `GateTool(fn)` to Gate `serve()` |
 
-Worker model: `${WORKER_MODEL}` | API: `${WORKER_BASE_URL}`
+Worker model: `google/gemma-3-27b-it` | API: `https://integrate.api.nvidia.com/v1`
