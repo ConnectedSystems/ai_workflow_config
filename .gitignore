@@ -1,2 +1,4 @@
 outputs/*
 !outputs/.gitkeep
+
+.claude/

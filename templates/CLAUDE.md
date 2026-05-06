@@ -84,10 +84,11 @@ If Kaimon drops: restart `./bin/kaimon`, press `g` to reconnect Gate.
 
 ---
 
-## Shell Detection
+## Shell Detection & Tool Selection
 
-- Windows (`$IsWindows` true): use `.ps1` scripts, `$env:VAR`, backtick continuation
-- Linux/macOS: use bash scripts, `$VAR`, backslash continuation
+- **Windows:** use the **PowerShell tool** (never Bash tool). Use `.ps1` scripts, `$env:VAR`, backtick continuation.
+- **Linux/macOS:** use the **Bash tool** (never PowerShell tool). Use bash scripts, `$VAR`, backslash continuation.
+- Never try Bash first and fall back to PowerShell (or vice versa) — detect the platform once and use the right tool immediately.
 - Never hardcode `/home/` or `C:\Users\` — use `~` / `$HOME` / `$env:USERPROFILE`
 
 ---
@@ -129,4 +130,4 @@ needing exact line numbers.
 | Swap worker model | Change `WORKER_MODEL` env var only |
 | New Julia domain tools | Add `GateTool(fn)` to Gate `serve()` |
 
-Worker model: `google/gemma-3-27b-it` | API: `https://integrate.api.nvidia.com/v1`
+Worker model: `google/gemma-4-31b-it` | API: `https://integrate.api.nvidia.com/v1`
